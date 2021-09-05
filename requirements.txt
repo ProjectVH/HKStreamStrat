@@ -1,0 +1,12 @@
+backtrader
+backtrader_plotting
+bokeh==2.2.2
+markdown2
+matplotlib
+nltk
+numpy
+openpyxl
+pandas
+pymongo[srv]
+requests
+streamlit

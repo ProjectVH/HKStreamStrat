@@ -68,14 +68,6 @@ def run(stock_market_option,symbol,company_name):
     ## get data from db
     df = stockPriceDB.load_data(collection, symbol, start, end)
 
-    # Display the close prices
-    st.header(company_name+" Close Price\n")
-    st.line_chart(df['Close'])
-
-    # Display the volume
-    st.header(company_name+" Volume\n")
-    st.line_chart(df['Volume'])
-
     if chosen_strategy == 'DEMA':
         dema = DoubleExponentialMovingAverage(df, symbol, stake, cash)
         dema.run()
@@ -99,11 +91,6 @@ def run(stock_market_option,symbol,company_name):
 
     # handling case of no trade happened
     if tradeStats:
-        st.bokeh_chart(plot_obj, use_container_width=True)
-
-        #broker_fig = Image.open("broker_fig.png")
-        #st.image(broker_fig, use_column_width=True)
-        st.bokeh_chart(tradeResultPlot, use_container_width=True)
 
         # create trade stats table
         st.header('Trades Statistics')
@@ -123,10 +110,33 @@ def run(stock_market_option,symbol,company_name):
             st.table(table1)
         with col2:
             st.table(table2)
-    else:
+
+        # Display the close prices
+        st.header(company_name + " Close Price\n")
+        st.line_chart(df['Close'])
+
+        # Display the volume
+        st.header(company_name + " Volume\n")
+        st.line_chart(df['Volume'])
+
         st.bokeh_chart(plot_obj, use_container_width=True)
+
+        #broker_fig = Image.open("broker_fig.png")
+        #st.image(broker_fig, use_column_width=True)
+        st.bokeh_chart(tradeResultPlot, use_container_width=True)
+
+    else:
+        # Display the close prices
+        st.header(company_name + " Close Price\n")
+        st.line_chart(df['Close'])
+
+        # Display the volume
+        st.header(company_name + " Volume\n")
+        st.line_chart(df['Volume'])
+
         st.markdown(
             "<h3 style='text-align: center;'><strong>No Closed Trade Happened.</strong></h3>", unsafe_allow_html=True)
+
 
 # Get statistics on the data
 #st.header('Data Statistics')
